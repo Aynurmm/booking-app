@@ -17,6 +17,10 @@ public class Passenger {
         this.password = password;
     }
 
+    public Passenger() {
+
+    }
+
     public int getId() {
         return id;
     }

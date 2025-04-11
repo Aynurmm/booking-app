@@ -6,11 +6,15 @@ import az.academy.turing.service.FlightService;
 import java.util.List;
 
 public class FlightController implements FlightService {
-    private final FlightService flightService;
+    private FlightService flightService;
 
 
     public FlightController(FlightService flightService) {
         this.flightService = flightService;
+    }
+
+    public FlightController() {
+
     }
 
     @Override
