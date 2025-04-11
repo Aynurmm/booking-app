@@ -12,6 +12,10 @@ public class Booking {
         this.passenger_id = passenger_id;
     }
 
+    public Booking() {
+
+    }
+
     public int getId() {
         return id;
     }
