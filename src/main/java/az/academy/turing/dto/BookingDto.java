@@ -1,12 +1,11 @@
-package az.academy.turing.model;
+package az.academy.turing.dto;
 
-public class Booking {
+public class BookingDto {
     private int id;
     private int flight_id;
     private int passenger_id;
 
-
-    public Booking(int id, int flight_id, int passenger_id) {
+    public BookingDto(int id, int flight_id, int passenger_id) {
         this.id = id;
         this.flight_id = flight_id;
         this.passenger_id = passenger_id;
@@ -38,7 +37,7 @@ public class Booking {
 
     @Override
     public String toString() {
-        return "Booking{" +
+        return "BookingDto{" +
                 "id=" + id +
                 ", flight_id=" + flight_id +
                 ", passenger_id=" + passenger_id +

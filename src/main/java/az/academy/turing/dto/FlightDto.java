@@ -1,23 +1,21 @@
-package az.academy.turing.model;
+package az.academy.turing.dto;
 
 import java.time.LocalDateTime;
 
-public class Flight {
-    private int id ;
+public class FlightDto {
+    private int id;
     private String from_city;
     private String to_city;
     private LocalDateTime timestamp;
     private int available_seats;
 
-
-    public Flight(int id, String from_city, String to_city, LocalDateTime timestamp, int available_seats) {
+    public FlightDto(int id, String from_city, String to_city, LocalDateTime timestamp, int available_seats) {
         this.id = id;
         this.from_city = from_city;
         this.to_city = to_city;
         this.timestamp = timestamp;
         this.available_seats = available_seats;
     }
-    public Flight(){}
 
     public int getId() {
         return id;
@@ -61,7 +59,7 @@ public class Flight {
 
     @Override
     public String toString() {
-        return "Flight{" +
+        return "FlightDto{" +
                 "id=" + id +
                 ", from_city='" + from_city + '\'' +
                 ", to_city='" + to_city + '\'' +

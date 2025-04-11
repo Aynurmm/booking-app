@@ -1,20 +1,14 @@
-package az.academy.turing.model;
+package az.academy.turing.dto;
 
-public class Passenger {
+public class PassengerDto {
     private int id;
     private String first_name;
     private String last_name;
-    private String login;
-    private String password;
 
-
-
-    public Passenger(int id, String first_name, String last_name, String login, String password) {
+    public PassengerDto(int id, String first_name, String last_name) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
-        this.login = login;
-        this.password = password;
     }
 
     public int getId() {
@@ -41,30 +35,12 @@ public class Passenger {
         this.last_name = last_name;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     @Override
     public String toString() {
-        return "Passenger{" +
+        return "PassengerDto{" +
                 "id=" + id +
                 ", first_name='" + first_name + '\'' +
                 ", last_name='" + last_name + '\'' +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
                 '}';
     }
 }
