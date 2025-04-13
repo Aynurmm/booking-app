@@ -6,6 +6,7 @@ import az.academy.turing.controller.PassengerController;
 import az.academy.turing.controller.SeatsController;
 import az.academy.turing.dto.FlightDto;
 import az.academy.turing.exception.AppException;
+import az.academy.turing.exception.MenuOptionNotFoundException;
 import az.academy.turing.model.Passenger;
 import az.academy.turing.dto.BookingDto;
 
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class ConsoleApp {
 
-    Scanner scanner = new Scanner(System.in);
+    Scanner scanner;
     FlightController flightController = new FlightController();
     BookingController bookingController = new BookingController();
     PassengerController passengerController = new PassengerController();
@@ -22,98 +23,122 @@ public class ConsoleApp {
 
     Passenger curPassenger;
 
+    public ConsoleApp(FlightController flightController, BookingController bookingController, PassengerController passengerController, SeatsController seatsController) {
+        this.flightController = flightController;
+        this.bookingController = bookingController;
+        this.passengerController = passengerController;
+        this.seatsController = seatsController;
+        this.scanner = new Scanner(System.in);
+
+    }
+
     public void start() {
         System.out.println("------------------Welcome to Flight Booking App!---------------");
-        authentication();
         while (true) {
+            printMenu();
             try {
-                System.out.println("1. Online-board");
-                System.out.println("2. Show flight info");
-                System.out.println("3. Search and book flight");
-                System.out.println("4. Cancel booking");
-                System.out.println("5. My flights");
-                System.out.println("6. Exit");
-                System.out.print("Enter your choice: ");
-
-                int choice = scanner.nextInt();
-                scanner.nextLine(); // Consume newline
-
-                switch (choice) {
-                    case 1:
-                        System.out.println("Online-board");
-                        break;
-                    case 2:
-                        // Flights information could be displayed here
-                        break;
-                    case 3:
-                        searchAndBookFlight();
-                        break;
-                    case 4:
-                        cancelBooking();
-                        break;
-                    case 5:
-                        showMyFlights();
-                        break;
-                    case 6:
-                        System.out.println("Exiting...");
-                        return;
-                    default:
-                        throw new AppException("Invalid selection: " + choice);
-                }
-            } catch (AppException e) {
+                int option = Integer.parseInt(scanner.nextLine().trim());
+            } catch (MenuOptionNotFoundException e) {
                 System.out.println(e.getMessage());
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter a number.");
             }
         }
     }
 
-    private void authentication() {
-        while (true) {
-            System.out.println("Entrance page:");
-            System.out.print("Passenger Name: ");
-            String passengerName = scanner.nextLine();
-            System.out.print("Password: ");
-            String passengerPassword = scanner.nextLine();
+    private void printMenu() {
 
-            // Validation logic for passenger name and password should be added here
-            // For now, we will just create a sample passenger
-            curPassenger = new Passenger(); // Create actual passenger logic
-            System.out.println("Authentication successful!");
-            break;
+        System.out.println("---------------------Flight Booking System-------------------");
+        System.out.println("1. Online-board\n2.Show flight info\n3.Search and book a flight" +
+                "\n4.Cancel the booking\n5.My flights\n6.Exit");
+
+    }
+
+    private void handleMenuOption(int option) throws MenuOptionNotFoundException {
+        switch (option) {
+            case 1:
+                //flightController.showOnlineBoard();
+                break;
+            case 2:
+                System.out.println("Enter Flight Id:");
+                String flightId = scanner.nextLine().trim();
+                //flightController.showFlightInfo(flightId);
+                break;
+            case 3:
+                System.out.println("Destination:");
+                String destination = scanner.nextLine().trim();
+                System.out.println("Date(yyyy-MM-dd):");
+                String date = scanner.nextLine().trim();
+                System.out.println("Passenger number:");
+                int passengerNum = Integer.parseInt(scanner.nextLine().trim());
+                //  bookingController.searchAndBookingFlight(destination,date,passengerNum,scanner);
+                break;
+            case 4:
+                System.out.println("Enter booking Id:");
+                String bookingId = scanner.nextLine().trim();
+                //bookingController.cancelBooking(bookingId);
+                break;
+            case 5:
+                System.out.println("Enter your name and surname:");
+                String nameSurname = scanner.nextLine().trim();
+                //bookingController.showMyFlights(nameSurname);
+                break;
+            case 6:
+                System.out.println("Exit from Application and SAVING your data!");
+                flightController.saveFlight();
+                bookingController.saveBooking();
+                System.exit(0);
+                break;
+            default:
+                throw new MenuOptionNotFoundException("Invalid menu number.");
         }
     }
 
-    private void searchAndBookFlight() {
-        System.out.println("Searching for flights...");
-        // Example logic for flight searching and reserving
-        // Assuming we have a method to get the available flights
 
-        List<FlightDto> availableFlights = flightController.findAll();
-        for (FlightDto flight : availableFlights) {
-            System.out.println("Flight ID: " + flight.getId() + ", From: " + flight.getFrom_city() + ", To: " + flight.getTo_city());
-        }
-
-        System.out.print("Enter flight ID to book: ");
-        int flightId = scanner.nextInt();
-        // Creating a booking (this is just an example; use actual passenger ID and other details)
-        BookingDto newBooking = new BookingDto();
-        newBooking.setFlight_id(flightId);
-        newBooking.setPassenger_id(curPassenger.getId()); // Assuming getId() method exists
-        bookingController.saveBooking(newBooking);
-
-        System.out.println("Booking successful!");
-    }
-
-    private void cancelBooking() {
-        System.out.print("Enter booking ID to cancel: ");
-        int bookingId = scanner.nextInt();
-        bookingController.deleteBooking(bookingId);
-        System.out.println("Booking canceled!");
-    }
-
-    private void showMyFlights() {
-        System.out.println("Showing your flights...");
-        // Logic to display the passenger's flights
-    }
+//    private void authentication() {
+//        while (true) {
+//            System.out.println("Entrance page:");
+//            System.out.print("Passenger Name: ");
+//            String passengerName = scanner.nextLine();
+//            System.out.print("Password: ");
+//            String passengerPassword = scanner.nextLine();
+//
+//
+//            curPassenger = new Passenger();
+//            System.out.println("Authentication successful!");
+//            break;
+//        }
+//    }
+//
+//    private void searchAndBookFlight() {
+//        System.out.println("Searching for flights...");
+//
+//
+//        List<FlightDto> availableFlights = flightController.findAll();
+//        for (FlightDto flight : availableFlights) {
+//            System.out.println("Flight ID: " + flight.getId() + ", From: " + flight.getFrom_city() + ", To: " + flight.getTo_city());
+//        }
+//
+//        System.out.print("Enter flight ID to book: ");
+//        int flightId = scanner.nextInt();
+//        BookingDto newBooking = new BookingDto();
+//        newBooking.setFlight_id(flightId);
+//        newBooking.setPassenger_id(curPassenger.getId());
+//        bookingController.saveBooking(newBooking);
+//
+//        System.out.println("Booking successful!");
+//    }
+//
+//    private void cancelBooking() {
+//        System.out.print("Enter booking ID to cancel: ");
+//        int bookingId = scanner.nextInt();
+//        bookingController.deleteBooking(bookingId);
+//        System.out.println("Booking canceled!");
+//    }
+//
+//    private void showMyFlights() {
+//        System.out.println("Showing your flights");
+}
 }
 
-// Note: The Pseudo methods like `getId` in Passenger class, and other validation logic should be defined in the respective classes.
+
