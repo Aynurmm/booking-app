@@ -8,6 +8,7 @@ public class Flight {
     private String to_city;
     private LocalDateTime timestamp;
     private int available_seats;
+    private int seats;
 
 
     public Flight(int id, String from_city, String to_city, LocalDateTime timestamp, int available_seats) {

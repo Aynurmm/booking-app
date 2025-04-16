@@ -4,11 +4,25 @@ public class BookingDto {
     private int id;
     private int flight_id;
     private int passenger_id;
+    private int numberOfSeats;
 
-    public BookingDto(int id, int flight_id, int passenger_id) {
+    public BookingDto() {
+
+    }
+
+    public int getNumberOfSeats() {
+        return numberOfSeats;
+    }
+
+    public void setNumberOfSeats(int numberOfSeats) {
+        this.numberOfSeats = numberOfSeats;
+    }
+
+    public BookingDto(int id, int flight_id, int passenger_id, int numberOfSeats) {
         this.id = id;
         this.flight_id = flight_id;
         this.passenger_id = passenger_id;
+        this.numberOfSeats=numberOfSeats;
     }
 
     public int getId() {
@@ -41,6 +55,7 @@ public class BookingDto {
                 "id=" + id +
                 ", flight_id=" + flight_id +
                 ", passenger_id=" + passenger_id +
+                ", numberOfSeats=" + numberOfSeats +
                 '}';
     }
 }

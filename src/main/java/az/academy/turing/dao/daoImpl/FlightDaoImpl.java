@@ -1,4 +1,4 @@
-package az.academy.turing.daoImpl;
+package az.academy.turing.dao.daoImpl;
 
 import az.academy.turing.config.ConfigHelper;
 import az.academy.turing.dao.FlightDao;
@@ -58,7 +58,6 @@ public class FlightDaoImpl implements FlightDao {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                flight.setId(resultSet.getInt("id"));
                 flight.setFrom_city(resultSet.getString("from_city"));
                 flight.setTo_city(resultSet.getString("to_city"));
                 flight.setTimestamp(resultSet.getTimestamp("timestamp").toLocalDateTime());

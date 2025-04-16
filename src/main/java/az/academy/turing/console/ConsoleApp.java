@@ -3,31 +3,47 @@ package az.academy.turing.console;
 import az.academy.turing.controller.BookingController;
 import az.academy.turing.controller.FlightController;
 import az.academy.turing.controller.PassengerController;
-import az.academy.turing.controller.SeatsController;
-import az.academy.turing.dto.FlightDto;
-import az.academy.turing.exception.AppException;
+import az.academy.turing.dao.BookingDao;
+import az.academy.turing.dao.FlightDao;
+import az.academy.turing.dao.PassengerDao;
+import az.academy.turing.dao.daoImpl.BookingDaoImpl;
+import az.academy.turing.dao.daoImpl.FlightDaoImpl;
+import az.academy.turing.dao.daoImpl.PassengerDaoImpl;
 import az.academy.turing.exception.MenuOptionNotFoundException;
 import az.academy.turing.model.Passenger;
-import az.academy.turing.dto.BookingDto;
+import az.academy.turing.service.BookingService;
+import az.academy.turing.service.FlightService;
+import az.academy.turing.service.PassengerService;
+import az.academy.turing.service.serviceImpl.BookingServiceImpl;
+import az.academy.turing.service.serviceImpl.FlightServiceImpl;
+import az.academy.turing.service.serviceImpl.PassengerServiceImpl;
 
 import java.util.Scanner;
-import java.util.List;
 
 public class ConsoleApp {
 
     Scanner scanner;
-    FlightController flightController = new FlightController();
-    BookingController bookingController = new BookingController();
-    PassengerController passengerController = new PassengerController();
-    SeatsController seatsController = new SeatsController();
+    FlightDao flightDao=new FlightDaoImpl();
+    FlightService flightService=new FlightServiceImpl(flightDao);
+    FlightController flightController=new FlightController(flightService);
+
+    BookingDao bookingDao=new BookingDaoImpl();
+    BookingService bookingService=new BookingServiceImpl(bookingDao);
+    BookingController bookingController=new BookingController(bookingService);
+
+    PassengerDao passengerDao=new PassengerDaoImpl();
+    PassengerService passengerService=new PassengerServiceImpl(passengerDao);
+    PassengerController passengerController=new PassengerController(passengerService);
+
+
+
 
     Passenger curPassenger;
 
-    public ConsoleApp(FlightController flightController, BookingController bookingController, PassengerController passengerController, SeatsController seatsController) {
+    public ConsoleApp(FlightController flightController, BookingController bookingController, PassengerController passengerController) {
         this.flightController = flightController;
         this.bookingController = bookingController;
         this.passengerController = passengerController;
-        this.seatsController = seatsController;
         this.scanner = new Scanner(System.in);
 
     }
@@ -57,7 +73,6 @@ public class ConsoleApp {
     private void handleMenuOption(int option) throws MenuOptionNotFoundException {
         switch (option) {
             case 1:
-                //flightController.showOnlineBoard();
                 break;
             case 2:
                 System.out.println("Enter Flight Id:");
@@ -71,22 +86,17 @@ public class ConsoleApp {
                 String date = scanner.nextLine().trim();
                 System.out.println("Passenger number:");
                 int passengerNum = Integer.parseInt(scanner.nextLine().trim());
-                //  bookingController.searchAndBookingFlight(destination,date,passengerNum,scanner);
                 break;
             case 4:
                 System.out.println("Enter booking Id:");
                 String bookingId = scanner.nextLine().trim();
-                //bookingController.cancelBooking(bookingId);
                 break;
             case 5:
                 System.out.println("Enter your name and surname:");
                 String nameSurname = scanner.nextLine().trim();
-                //bookingController.showMyFlights(nameSurname);
                 break;
             case 6:
                 System.out.println("Exit from Application and SAVING your data!");
-                flightController.saveFlight();
-                bookingController.saveBooking();
                 System.exit(0);
                 break;
             default:
@@ -95,50 +105,7 @@ public class ConsoleApp {
     }
 
 
-//    private void authentication() {
-//        while (true) {
-//            System.out.println("Entrance page:");
-//            System.out.print("Passenger Name: ");
-//            String passengerName = scanner.nextLine();
-//            System.out.print("Password: ");
-//            String passengerPassword = scanner.nextLine();
-//
-//
-//            curPassenger = new Passenger();
-//            System.out.println("Authentication successful!");
-//            break;
-//        }
-//    }
-//
-//    private void searchAndBookFlight() {
-//        System.out.println("Searching for flights...");
-//
-//
-//        List<FlightDto> availableFlights = flightController.findAll();
-//        for (FlightDto flight : availableFlights) {
-//            System.out.println("Flight ID: " + flight.getId() + ", From: " + flight.getFrom_city() + ", To: " + flight.getTo_city());
-//        }
-//
-//        System.out.print("Enter flight ID to book: ");
-//        int flightId = scanner.nextInt();
-//        BookingDto newBooking = new BookingDto();
-//        newBooking.setFlight_id(flightId);
-//        newBooking.setPassenger_id(curPassenger.getId());
-//        bookingController.saveBooking(newBooking);
-//
-//        System.out.println("Booking successful!");
-//    }
-//
-//    private void cancelBooking() {
-//        System.out.print("Enter booking ID to cancel: ");
-//        int bookingId = scanner.nextInt();
-//        bookingController.deleteBooking(bookingId);
-//        System.out.println("Booking canceled!");
-//    }
-//
-//    private void showMyFlights() {
-//        System.out.println("Showing your flights");
 }
-}
+
 
 
