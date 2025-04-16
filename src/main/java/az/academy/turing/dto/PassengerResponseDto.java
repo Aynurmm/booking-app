@@ -1,23 +1,14 @@
 package az.academy.turing.dto;
 
-public class PassengerDto {
-    private int id;
+public class PassengerResponseDto {
     private String first_name;
     private String last_name;
 
-    public PassengerDto(int id, String first_name, String last_name) {
-        this.id = id;
+    public PassengerResponseDto(String first_name, String last_name) {
         this.first_name = first_name;
         this.last_name = last_name;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    public PassengerResponseDto(){};
 
     public String getFirst_name() {
         return first_name;
@@ -37,9 +28,8 @@ public class PassengerDto {
 
     @Override
     public String toString() {
-        return "PassengerDto{" +
-                "id=" + id +
-                ", first_name='" + first_name + '\'' +
+        return "PassengerResponseDto{" +
+                "first_name='" + first_name + '\'' +
                 ", last_name='" + last_name + '\'' +
                 '}';
     }

@@ -16,10 +16,9 @@ public class Passenger {
         this.login = login;
         this.password = password;
     }
+    public Passenger(){};
 
-    public Passenger() {
 
-    }
 
     public int getId() {
         return id;

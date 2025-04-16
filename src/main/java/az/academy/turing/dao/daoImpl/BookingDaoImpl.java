@@ -1,4 +1,4 @@
-package az.academy.turing.daoImpl;
+package az.academy.turing.dao.daoImpl;
 
 import az.academy.turing.config.ConfigHelper;
 import az.academy.turing.dao.BookingDao;
@@ -23,6 +23,7 @@ public class BookingDaoImpl implements BookingDao {
             preparedStatement.setInt(1, booking.getId());
             preparedStatement.setInt(2, booking.getFlight_id());
             preparedStatement.setInt(3, booking.getPassenger_id());
+            preparedStatement.setInt(4,booking.getNumberOfSeats());
             preparedStatement.executeUpdate();
             LoggerHelper.info("Booking saved successfully");
         } catch (SQLException e) {
@@ -38,7 +39,7 @@ public class BookingDaoImpl implements BookingDao {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                booking = new Booking(resultSet.getInt("id"), resultSet.getInt("flight_id"), resultSet.getInt("passenger_id"));
+                booking = new Booking(resultSet.getInt("id"), resultSet.getInt("flight_id"), resultSet.getInt("passenger_id"),resultSet.getInt("numberOfSeats"));
             }
             LoggerHelper.info("Booking fetched by id successfully");
 
@@ -67,7 +68,8 @@ public class BookingDaoImpl implements BookingDao {
             PreparedStatement preparedStatement = connection.prepareStatement(BookingQuery.update_bookingById.getQuery());
             preparedStatement.setInt(1, booking.getFlight_id());
             preparedStatement.setInt(2, booking.getPassenger_id());
-            preparedStatement.setInt(3, id);
+            preparedStatement.setInt(3,booking.getNumberOfSeats());
+            preparedStatement.setInt(4, id);
             int rows = preparedStatement.executeUpdate();
             LoggerHelper.info("Updated rows count: " + rows);
             LoggerHelper.info("Booking info updated successfully");
@@ -83,7 +85,7 @@ public class BookingDaoImpl implements BookingDao {
             PreparedStatement preparedStatement = connection.prepareStatement(BookingQuery.get_allBookings.getQuery());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Booking booking = new Booking(resultSet.getInt("id"), resultSet.getInt("flight_id"), resultSet.getInt("passenger_id"));
+                Booking booking = new Booking(resultSet.getInt("id"), resultSet.getInt("flight_id"), resultSet.getInt("passenger_id"),resultSet.getInt("numberOfSeats"));
                 bookingList.add(booking);
             }
             LoggerHelper.info("All bookings fetched successfully");
