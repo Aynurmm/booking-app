@@ -1,6 +1,6 @@
 package az.academy.turing.dao.daoImpl;
 
-import az.academy.turing.config.ConfigHelper;
+import az.academy.turing.config.DatabaseConfig;
 import az.academy.turing.dao.FlightDao;
 import az.academy.turing.enums.FlightQuery;
 import az.academy.turing.helper.LoggerHelper;
@@ -13,7 +13,7 @@ import java.util.List;
 public class FlightDaoImpl implements FlightDao {
     @Override
     public void saveFlight(Flight flight) {
-        try (Connection connection = ConfigHelper.getConnection()) {
+        try (Connection connection = DatabaseConfig.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(FlightQuery.insert_flight.getQuery());
             preparedStatement.setInt(1, flight.getId());
             preparedStatement.setString(2, flight.getFrom_city());
@@ -31,7 +31,7 @@ public class FlightDaoImpl implements FlightDao {
     @Override
     public List<Flight> findAll() {
         List<Flight> flightList = new ArrayList<>();
-        try (Connection connection = ConfigHelper.getConnection()) {
+        try (Connection connection = DatabaseConfig.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(FlightQuery.get_allFlights.getQuery());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -53,7 +53,7 @@ public class FlightDaoImpl implements FlightDao {
     @Override
     public Flight findById(int id) {
         Flight flight = new Flight();
-        try (Connection connection = ConfigHelper.getConnection()) {
+        try (Connection connection = DatabaseConfig.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(FlightQuery.get_flightByIdd.getQuery());
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -73,7 +73,7 @@ public class FlightDaoImpl implements FlightDao {
 
     @Override
     public void deleteFlight(int id) {
-        try (Connection connection = ConfigHelper.getConnection()) {
+        try (Connection connection = DatabaseConfig.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(FlightQuery.delete_flightById.getQuery());
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
@@ -85,7 +85,7 @@ public class FlightDaoImpl implements FlightDao {
 
     @Override
     public void updateFlightInfo(int id, Flight flight) {
-        try (Connection connection = ConfigHelper.getConnection()) {
+        try (Connection connection = DatabaseConfig.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(FlightQuery.update_flightById.getQuery());
             preparedStatement.setString(1, flight.getFrom_city());
             preparedStatement.setString(2, flight.getTo_city());

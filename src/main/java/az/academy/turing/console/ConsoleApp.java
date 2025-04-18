@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleApp {
-
-    Scanner scanner;
+booking-management
+    public final static Scanner scanner = new Scanner(System.in);
     FlightDao flightDao = new FlightDaoImpl();
     FlightService flightService = new FlightServiceImpl(flightDao);
     FlightController flightController = new FlightController(flightService);
@@ -38,6 +38,7 @@ public class ConsoleApp {
     PassengerDao passengerDao = new PassengerDaoImpl();
     PassengerService passengerService = new PassengerServiceImpl(passengerDao);
     PassengerController passengerController = new PassengerController(passengerService);
+
 
 
     Passenger curPassenger;
@@ -54,6 +55,7 @@ public class ConsoleApp {
 
     }
 
+ main
     public void start() {
         while (true) {
             printMenu();
@@ -81,8 +83,8 @@ public class ConsoleApp {
     private void printMenu() {
 
         System.out.println("---------------------Flight Booking System-------------------");
-        System.out.println("1. Online-board\n2.Show flight info\n3.Search and book a flight" +
-                "\n4.Cancel the booking\n5.My flights\n6.Exit");
+        System.out.println("1. Online-board\n2. Show flight info\n3. Search and book a flight" +
+                "\n4. Cancel the booking\n5. My flights\n6. Exit");
 
     }
 
@@ -158,6 +160,33 @@ public class ConsoleApp {
 
     private void handleMenuOption(int option) throws MenuOptionNotFoundException {
         switch (option) {
+ booking-management
+            case 1:
+                break;
+            case 2:
+                System.out.println("Enter Flight Id:");
+                String flightId = scanner.nextLine().trim();
+
+                break;
+            case 3:
+                System.out.println("Destination:");
+                String destination = scanner.nextLine().trim();
+                System.out.println("Date(yyyy-MM-dd):");
+                String date = scanner.nextLine().trim();
+                System.out.println("Passenger number:");
+                int passengerNum = Integer.parseInt(scanner.nextLine().trim());
+                break;
+            case 4:
+                System.out.println("Enter booking Id:");
+                String bookingId = scanner.nextLine().trim();
+                break;
+            case 5:
+                System.out.println("Enter your name and surname:");
+                String nameSurname = scanner.nextLine().trim();
+                break;
+            case 6:
+                System.out.println("Exit from Application and SAVING your data!");
+=======
             case 1 -> showOnlineBoard();
             case 2 -> showFlightInfo();
             case 3 -> searchAndBookFlight();
@@ -165,6 +194,7 @@ public class ConsoleApp {
             case 5 -> viewMyFlights();
             case 6 -> {
                 System.out.println("Exiting... Goodbye!");
+ main
                 System.exit(0);
             }
             default -> System.out.println("Invalid option. Please try again.");
