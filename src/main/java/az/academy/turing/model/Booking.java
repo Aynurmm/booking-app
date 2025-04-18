@@ -19,6 +19,7 @@ public class Booking {
     }
 
     public Booking(int flightId, int passengerId, int numberOfSeats) {
+
     }
 
 

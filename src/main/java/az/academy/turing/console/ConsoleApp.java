@@ -22,31 +22,21 @@ import java.util.Scanner;
 
 public class ConsoleApp {
 
-    Scanner scanner;
-    FlightDao flightDao=new FlightDaoImpl();
-    FlightService flightService=new FlightServiceImpl(flightDao);
-    FlightController flightController=new FlightController(flightService);
+    public final static Scanner scanner = new Scanner(System.in);
+    FlightDao flightDao = new FlightDaoImpl();
+    FlightService flightService = new FlightServiceImpl(flightDao);
+    FlightController flightController = new FlightController(flightService);
 
-    BookingDao bookingDao=new BookingDaoImpl();
-    BookingService bookingService=new BookingServiceImpl(bookingDao);
-    BookingController bookingController=new BookingController(bookingService);
+    BookingDao bookingDao = new BookingDaoImpl();
+    BookingService bookingService = new BookingServiceImpl(bookingDao);
+    BookingController bookingController = new BookingController(bookingService);
 
-    PassengerDao passengerDao=new PassengerDaoImpl();
-    PassengerService passengerService=new PassengerServiceImpl(passengerDao);
-    PassengerController passengerController=new PassengerController(passengerService);
-
-
+    PassengerDao passengerDao = new PassengerDaoImpl();
+    PassengerService passengerService = new PassengerServiceImpl(passengerDao);
+    PassengerController passengerController = new PassengerController(passengerService);
 
 
-    Passenger curPassenger;
 
-    public ConsoleApp(FlightController flightController, BookingController bookingController, PassengerController passengerController) {
-        this.flightController = flightController;
-        this.bookingController = bookingController;
-        this.passengerController = passengerController;
-        this.scanner = new Scanner(System.in);
-
-    }
 
     public void start() {
         System.out.println("------------------Welcome to Flight Booking App!---------------");
@@ -65,8 +55,8 @@ public class ConsoleApp {
     private void printMenu() {
 
         System.out.println("---------------------Flight Booking System-------------------");
-        System.out.println("1. Online-board\n2.Show flight info\n3.Search and book a flight" +
-                "\n4.Cancel the booking\n5.My flights\n6.Exit");
+        System.out.println("1. Online-board\n2. Show flight info\n3. Search and book a flight" +
+                "\n4. Cancel the booking\n5. My flights\n6. Exit");
 
     }
 
@@ -77,7 +67,7 @@ public class ConsoleApp {
             case 2:
                 System.out.println("Enter Flight Id:");
                 String flightId = scanner.nextLine().trim();
-                //flightController.showFlightInfo(flightId);
+
                 break;
             case 3:
                 System.out.println("Destination:");

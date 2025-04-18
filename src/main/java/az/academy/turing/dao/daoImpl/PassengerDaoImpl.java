@@ -1,6 +1,6 @@
 package az.academy.turing.dao.daoImpl;
 
-import az.academy.turing.config.ConfigHelper;
+import az.academy.turing.config.DatabaseConfig;
 import az.academy.turing.dao.PassengerDao;
 import az.academy.turing.enums.PassengerQuery;
 import az.academy.turing.helper.LoggerHelper;
@@ -16,7 +16,7 @@ import java.util.List;
 public class PassengerDaoImpl implements PassengerDao {
     @Override
     public void savePassenger(Passenger passenger) {
-        try (Connection connection = ConfigHelper.getConnection()) {
+        try (Connection connection = DatabaseConfig.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(PassengerQuery.insert_passenger.getQuery());
             preparedStatement.setInt(1, passenger.getId());
             preparedStatement.setString(2, passenger.getFirst_name());
@@ -32,7 +32,7 @@ public class PassengerDaoImpl implements PassengerDao {
 
     @Override
     public void deletePassenger(int id) {
-        try (Connection connection = ConfigHelper.getConnection()) {
+        try (Connection connection = DatabaseConfig.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(PassengerQuery.delete_passengerById.getQuery());
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
@@ -45,7 +45,7 @@ public class PassengerDaoImpl implements PassengerDao {
     @Override
     public Passenger findById(int id) {
         Passenger passenger = new Passenger();
-        try (Connection connection = ConfigHelper.getConnection()) {
+        try (Connection connection = DatabaseConfig.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(PassengerQuery.getPassenger_ById.getQuery());
             preparedStatement.setInt(1, id);
             ResultSet res = preparedStatement.executeQuery();
@@ -66,7 +66,7 @@ public class PassengerDaoImpl implements PassengerDao {
     @Override
     public List<Passenger> findAll() {
         List<Passenger>passengerList=new ArrayList<>();
-     try(Connection connection=ConfigHelper.getConnection()) {
+     try(Connection connection= DatabaseConfig.getConnection()) {
          PreparedStatement preparedStatement=connection.prepareStatement(PassengerQuery.get_allPassengers.getQuery());
          ResultSet resultSet=preparedStatement.executeQuery();
          while (resultSet.next()){
@@ -87,7 +87,7 @@ public class PassengerDaoImpl implements PassengerDao {
 
     @Override
     public void updatePassengerInfo(int id, Passenger passenger) {
-        try(Connection connection=ConfigHelper.getConnection()) {
+        try(Connection connection= DatabaseConfig.getConnection()) {
             PreparedStatement preparedStatement=connection.prepareStatement(PassengerQuery.update_passengerById.getQuery());
             preparedStatement.setString(1,passenger.getFirst_name());
             preparedStatement.setString(2,passenger.getLast_name());
