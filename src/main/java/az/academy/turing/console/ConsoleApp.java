@@ -51,6 +51,7 @@ public class ConsoleApp {
     }
 
     public ConsoleApp() {
+        this.scanner = new Scanner(System.in);
 
     }
 
@@ -87,9 +88,14 @@ public class ConsoleApp {
     }
 
     private void showOnlineBoard() {
-        List<FlightDto> flights = flightService.getFlightsInNext24Hours();
-        for (FlightDto flight : flights) {
-            System.out.println(flight);
+        try {
+            List<FlightDto> flights = flightService.getFlightsInNext24Hours();
+            for (FlightDto flight : flights) {
+                System.out.println(flight);
+            }
+        } catch (Exception e) {
+            System.out.println("An error occurred while fetching flights: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
