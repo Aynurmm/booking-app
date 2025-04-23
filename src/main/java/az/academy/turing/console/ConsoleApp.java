@@ -26,7 +26,8 @@ import java.util.Scanner;
 
 public class ConsoleApp {
 
-    Scanner scanner=new Scanner(System.in);
+ Scanner scanner = new Scanner(System.in);
+
     FlightDao flightDao = new FlightDaoImpl();
     FlightService flightService = new FlightServiceImpl(flightDao);
     FlightController flightController = new FlightController(flightService);
@@ -38,6 +39,7 @@ public class ConsoleApp {
     PassengerDao passengerDao = new PassengerDaoImpl();
     PassengerService passengerService = new PassengerServiceImpl(passengerDao);
     PassengerController passengerController = new PassengerController(passengerService);
+
 
 
     Passenger curPassenger;
@@ -54,6 +56,7 @@ public class ConsoleApp {
 
     }
 
+ main
     public void start() {
         while (true) {
             printMenu();
@@ -73,8 +76,8 @@ public class ConsoleApp {
     private void printMenu() {
 
         System.out.println("---------------------Flight Booking System-------------------");
-        System.out.println("1. Online-board\n2.Show flight info\n3.Search and book a flight" +
-                "\n4.Cancel the booking\n5.My flights\n6.Exit");
+        System.out.println("1. Online-board\n2. Show flight info\n3. Search and book a flight" +
+                "\n4. Cancel the booking\n5. My flights\n6. Exit");
 
     }
 
@@ -155,6 +158,8 @@ public class ConsoleApp {
 
     private void handleMenuOption(int option) throws MenuOptionNotFoundException {
         switch (option) {
+           
+
             case 1 -> showOnlineBoard();
             case 2 -> showFlightInfo();
             case 3 -> searchAndBookFlight();

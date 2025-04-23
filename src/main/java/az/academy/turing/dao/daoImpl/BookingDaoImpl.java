@@ -1,6 +1,6 @@
 package az.academy.turing.dao.daoImpl;
 
-import az.academy.turing.config.ConfigHelper;
+import az.academy.turing.config.DatabaseConfig;
 import az.academy.turing.dao.BookingDao;
 import az.academy.turing.enums.BookingQuery;
 import az.academy.turing.helper.LoggerHelper;
@@ -18,7 +18,7 @@ public class BookingDaoImpl implements BookingDao {
 
     @Override
     public void saveBooking(Booking booking) {
-        try (Connection connection = ConfigHelper.getConnection()) {
+        try (Connection connection = DatabaseConfig.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(BookingQuery.insert_booking.getQuery());
             preparedStatement.setInt(1, booking.getId());
             preparedStatement.setInt(2, booking.getFlight_id());
@@ -34,7 +34,7 @@ public class BookingDaoImpl implements BookingDao {
     @Override
     public Booking findById(int id) {
         Booking booking = null;
-        try (Connection connection = ConfigHelper.getConnection()) {
+        try (Connection connection = DatabaseConfig.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(BookingQuery.get_bookingById.getQuery());
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -52,7 +52,7 @@ public class BookingDaoImpl implements BookingDao {
 
     @Override
     public void deleteBooking(int id) {
-        try (Connection connection = ConfigHelper.getConnection()) {
+        try (Connection connection = DatabaseConfig.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(BookingQuery.delete_bookingById.getQuery());
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
@@ -64,7 +64,7 @@ public class BookingDaoImpl implements BookingDao {
 
     @Override
     public void updateBooking(int id, Booking booking) {
-        try (Connection connection = ConfigHelper.getConnection()) {
+        try (Connection connection = DatabaseConfig.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(BookingQuery.update_bookingById.getQuery());
             preparedStatement.setInt(1, booking.getFlight_id());
             preparedStatement.setInt(2, booking.getPassenger_id());
@@ -81,7 +81,7 @@ public class BookingDaoImpl implements BookingDao {
     @Override
     public List<Booking> findAll() {
         List<Booking> bookingList = new ArrayList<>();
-        try (Connection connection = ConfigHelper.getConnection()) {
+        try (Connection connection = DatabaseConfig.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(BookingQuery.get_allBookings.getQuery());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
