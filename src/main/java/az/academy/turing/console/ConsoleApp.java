@@ -25,8 +25,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleApp {
-booking-management
-    public final static Scanner scanner = new Scanner(System.in);
+
+ Scanner scanner = new Scanner(System.in);
+
     FlightDao flightDao = new FlightDaoImpl();
     FlightService flightService = new FlightServiceImpl(flightDao);
     FlightController flightController = new FlightController(flightService);
@@ -62,23 +63,15 @@ booking-management
             int choice = getIntInput("Choose an option:");
 
             try {
-                switch (choice) {
-                    case 1 -> showOnlineBoard();
-                    case 2 -> showFlightInfo();
-                    case 3 -> searchAndBookFlight();
-                    case 4 -> cancelBooking();
-                    case 5 -> viewMyFlights();
-                    case 6 -> {
-                        System.out.println("Exiting... Goodbye!");
-                        return;
-                    }
-                    default -> System.out.println("Invalid option. Please try again.");
-                }
+                handleMenuOption(choice);
+            } catch (MenuOptionNotFoundException e) {
+                System.out.println("Menu error: " + e.getMessage());
             } catch (RuntimeException e) {
                 System.out.println("Error: " + e.getMessage());
             }
         }
     }
+
 
     private void printMenu() {
 
@@ -89,9 +82,14 @@ booking-management
     }
 
     private void showOnlineBoard() {
-        List<FlightDto> flights = flightService.getFlightsInNext24Hours();
-        for (FlightDto flight : flights) {
-            System.out.println(flight);
+        try {
+            List<FlightDto> flights = flightService.getFlightsInNext24Hours();
+            for (FlightDto flight : flights) {
+                System.out.println(flight);
+            }
+        } catch (Exception e) {
+            System.out.println("An error occurred while fetching flights: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -138,7 +136,7 @@ booking-management
     }
 
     private void viewMyFlights() {
-        int id = getIntInput("Enter your full name:");
+        int id = getIntInput("Enter your id:");
         Passenger passenger = new Passenger();
         passenger.setId(id);
         List<BookingDto> bookings = bookingService.getBookingByPassenger(passenger);
@@ -160,33 +158,8 @@ booking-management
 
     private void handleMenuOption(int option) throws MenuOptionNotFoundException {
         switch (option) {
- booking-management
-            case 1:
-                break;
-            case 2:
-                System.out.println("Enter Flight Id:");
-                String flightId = scanner.nextLine().trim();
+           
 
-                break;
-            case 3:
-                System.out.println("Destination:");
-                String destination = scanner.nextLine().trim();
-                System.out.println("Date(yyyy-MM-dd):");
-                String date = scanner.nextLine().trim();
-                System.out.println("Passenger number:");
-                int passengerNum = Integer.parseInt(scanner.nextLine().trim());
-                break;
-            case 4:
-                System.out.println("Enter booking Id:");
-                String bookingId = scanner.nextLine().trim();
-                break;
-            case 5:
-                System.out.println("Enter your name and surname:");
-                String nameSurname = scanner.nextLine().trim();
-                break;
-            case 6:
-                System.out.println("Exit from Application and SAVING your data!");
-=======
             case 1 -> showOnlineBoard();
             case 2 -> showFlightInfo();
             case 3 -> searchAndBookFlight();
@@ -194,7 +167,6 @@ booking-management
             case 5 -> viewMyFlights();
             case 6 -> {
                 System.out.println("Exiting... Goodbye!");
- main
                 System.exit(0);
             }
             default -> System.out.println("Invalid option. Please try again.");
