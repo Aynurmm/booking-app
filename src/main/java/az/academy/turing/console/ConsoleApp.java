@@ -26,7 +26,7 @@ import java.util.Scanner;
 
 public class ConsoleApp {
 
-    Scanner scanner;
+    Scanner scanner=new Scanner(System.in);
     FlightDao flightDao = new FlightDaoImpl();
     FlightService flightService = new FlightServiceImpl(flightDao);
     FlightController flightController = new FlightController(flightService);
@@ -51,7 +51,6 @@ public class ConsoleApp {
     }
 
     public ConsoleApp() {
-        this.scanner = new Scanner(System.in);
 
     }
 
@@ -61,23 +60,15 @@ public class ConsoleApp {
             int choice = getIntInput("Choose an option:");
 
             try {
-                switch (choice) {
-                    case 1 -> showOnlineBoard();
-                    case 2 -> showFlightInfo();
-                    case 3 -> searchAndBookFlight();
-                    case 4 -> cancelBooking();
-                    case 5 -> viewMyFlights();
-                    case 6 -> {
-                        System.out.println("Exiting... Goodbye!");
-                        return;
-                    }
-                    default -> System.out.println("Invalid option. Please try again.");
-                }
+                handleMenuOption(choice);
+            } catch (MenuOptionNotFoundException e) {
+                System.out.println("Menu error: " + e.getMessage());
             } catch (RuntimeException e) {
                 System.out.println("Error: " + e.getMessage());
             }
         }
     }
+
 
     private void printMenu() {
 
@@ -142,7 +133,7 @@ public class ConsoleApp {
     }
 
     private void viewMyFlights() {
-        int id = getIntInput("Enter your full name:");
+        int id = getIntInput("Enter your id:");
         Passenger passenger = new Passenger();
         passenger.setId(id);
         List<BookingDto> bookings = bookingService.getBookingByPassenger(passenger);
